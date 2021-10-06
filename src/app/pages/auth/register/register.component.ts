@@ -85,6 +85,7 @@ export class RegisterComponent implements OnInit {
     this.authService.signUp(user).then(resp => {
       this.loading = false;
       console.log(resp);
+      this.formulario.reset();
     }).catch(err => {
       this.loading = false;
       console.log(err);

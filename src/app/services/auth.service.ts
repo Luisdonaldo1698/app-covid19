@@ -34,14 +34,16 @@ export class AuthService {
         delete user.password;
         this.userCollection.add(user).then(r => {
           console.log(r);
+          this.alertService.showAlert('Usuario creado', 'Usuario registrado correctamente', 'success');
         }).catch(err => {
-          console.log(err);
+          this.alertService.showAlert('Error', err, 'error');
         });
         return true;
       }
       return false;
     }).catch(err => {
       console.log(err);
+      this.alertService.showAlert('Error', err, 'error');
     });
   }
 }
