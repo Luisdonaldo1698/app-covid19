@@ -21,7 +21,7 @@ export class AuthService {
     this.userCollection = afs.collection<UserModel>('users');
   }
 
-  login(email: string, password: string){0
+  login(email: string, password: string){
     return this.angularFireAuth.signInWithEmailAndPassword(email, password);
   }
 
