@@ -10,6 +10,7 @@ import { PrimeModule } from './prime.module';
 import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import { PacienteModule } from './pages/pacientes/paciente/paciente.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     PrimeModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    PacienteModule,
   ],
   providers: [
     AngularFirestore,

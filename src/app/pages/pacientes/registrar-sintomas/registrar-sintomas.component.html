@@ -1,0 +1,84 @@
+<div class="container">
+    <div class="formulario">
+
+        <form [formGroup]="formulario" (ngSubmit)="registrarSintomas()">
+            <!-- descripcion -->
+            <div>
+                <span class="p-float-label">
+                  <input
+                  type="text"
+                  autocomplete="off"
+                  pInputText
+                  formControlName="descripcion"
+                  />
+                  <label for="float-input">Descripcion</label>
+              </span>
+
+                <div *ngFor="let validacion of validacionMensajes.descripcion">
+                    <div class="mensajeError" *ngIf="validarFormulario('descripcion', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+            <!-- gravidez -->
+            <div>
+                <span class="p-float-label">
+        <input
+        type="text"
+          autocomplete="off"
+          pInputText
+          formControlName="gravidez"
+        />
+        <label for="float-input">Gravidez</label>
+      </span>
+
+                <div *ngFor="let validacion of validacionMensajes.gravidez">
+                    <div class="mensajeError" *ngIf="validarFormulario('gravidez', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- dias transcurridos -->
+            <div>
+                <span class="p-float-label">
+              <input
+              type="number"
+              autocomplete="off"
+              pInputText
+              formControlName="dias"
+              />
+              <label for="float-input">Dias transcurridos</label>
+            </span>
+
+                <div *ngFor="let validacion of validacionMensajes.dias">
+                    <div class="mensajeError" *ngIf="validarFormulario('dias', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+            <!-- personas -->
+            <div>
+                <span class="p-float-label">
+        <input type="number" autocomplete="off" pInputText formControlName="personas"/>
+        <label for="float-input">Personas convividas</label>
+      </span>
+
+                <div *ngFor="let validacion of validacionMensajes.personas">
+                    <div class="mensajeError" *ngIf="validarFormulario('personas', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+            <div class="buttonSubmit">
+                <button pButton type="submit" label="Registrar" [disabled]="formulario.invalid" [loading]="loading"></button>
+
+            </div>
+
+        </form>
+    </div>
+</div>

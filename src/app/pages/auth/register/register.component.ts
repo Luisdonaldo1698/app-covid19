@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
 import { AlertService } from '../../../services/alert.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -41,6 +42,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private alertService: AlertService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -82,14 +84,13 @@ export class RegisterComponent implements OnInit {
       password: this.formulario.get('password')?.value,
       rol: this.rol,
     }
-    this.authService.signUp(user).then(resp => {
+    this.authService.signUp(user).then(() => {
       this.loading = false;
-      console.log(resp);
       this.formulario.reset();
+      this.router.navigate([this.rol === 'doctor' ? '/d' : '/p'], {replaceUrl: true});
     }).catch(err => {
       this.loading = false;
       console.log(err);
     });
   }
-
 }

@@ -4,11 +4,15 @@ import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/comp
 import { Observable } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { AlertService } from './alert.service';
+import { map } from 'rxjs/operators'
+import { Roles } from '../models/userRol.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  user: UserModel | undefined;
 
   // users: Observable<UserModel>;
   private userCollection: AngularFirestoreCollection<UserModel>;
@@ -17,6 +21,7 @@ export class AuthService {
     private angularFireAuth: AngularFireAuth,
     private afs: AngularFirestore,
     private alertService: AlertService,
+    private router: Router,
   ) {
     this.userCollection = afs.collection<UserModel>('users');
   }
@@ -34,7 +39,6 @@ export class AuthService {
         delete user.password;
         this.userCollection.add(user).then(r => {
           console.log(r);
-          this.alertService.showAlert('Usuario creado', 'Usuario registrado correctamente', 'success');
         }).catch(err => {
           this.alertService.showAlert('Error', err, 'error');
         });
@@ -46,4 +50,44 @@ export class AuthService {
       this.alertService.showAlert('Error', err, 'error');
     });
   }
+
+  SignOut() {
+    return this.angularFireAuth.signOut();
+  }
+
+  checkAuthentication(rol: Roles): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.angularFireAuth.authState.subscribe(user => {
+        if(user && user.uid){
+          this.getUser(user.uid).subscribe((resp: UserModel[]) => {
+            if(resp.length > 0){
+              this.user = resp[0];
+              const condicion = this.user.rol === rol;
+              if(!condicion){
+                this.router.navigate([`/${this.user.rol.substring(0,1)}`], {replaceUrl: true});
+              }
+              resolve(condicion);
+            }
+            reject();
+          });
+        }
+      },err => {
+        reject(err);
+      });
+    });
+  }
+
+  getUser(uid: string){
+    this.userCollection = this.afs.collection<UserModel>('users', ref => ref.where('id', '==', uid));
+    return this.userCollection.snapshotChanges().pipe(
+      map(actions =>
+        actions.map(a => {
+          const datos = a.payload.doc.data() as UserModel;
+          const id = a.payload.doc.id;
+          return { id, ... datos }
+        })
+      )
+    );
+  }
+
 }
