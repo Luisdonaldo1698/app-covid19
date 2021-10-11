@@ -52,6 +52,7 @@ export class AuthService {
   }
 
   logOut() {
+    this.user = undefined;
     return this.angularFireAuth.signOut();
   }
 
@@ -74,6 +75,27 @@ export class AuthService {
         else {
           this.router.navigate(['/login'], {replaceUrl: true});
           reject();
+        }
+      },err => {
+        reject(err);
+      });
+    });
+  }
+
+  loginGuard(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.angularFireAuth.authState.subscribe(user => {
+        if(!user){
+          resolve(true);
+        }
+        else {
+          this.getUser(user.uid).subscribe((resp: UserModel[]) => {
+            if(resp.length > 0){
+              this.router.navigate([`/${resp[0].rol.substring(0,1)}`], {replaceUrl: true});
+              resolve(false);
+            }
+            resolve(true);
+          });
         }
       },err => {
         reject(err);

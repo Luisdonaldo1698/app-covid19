@@ -8,11 +8,13 @@ import { AdminGuard } from './guards/admin.guard';
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule)
+    loadChildren: () => import('./pages/auth/login/login.module').then(m => m.LoginModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterModule)
+    loadChildren: () => import('./pages/auth/register/register.module').then(m => m.RegisterModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'p',
