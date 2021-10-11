@@ -11,6 +11,10 @@ import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { PacienteModule } from './pages/pacientes/paciente/paciente.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ComponentsModule } from './components/components.module';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,16 +23,21 @@ import { PacienteModule } from './pages/pacientes/paciente/paciente.module';
     RegisterComponent */
   ],
   imports: [
-    BrowserModule,
     FormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     PrimeModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     PacienteModule,
+    ComponentsModule,
   ],
   providers: [
     AngularFirestore,
+  ],
+  exports: [
+    NavbarComponent,
   ],
   bootstrap: [AppComponent]
 })

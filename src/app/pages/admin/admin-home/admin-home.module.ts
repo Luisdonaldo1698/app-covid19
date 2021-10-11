@@ -5,6 +5,7 @@ import { AdminHomeRoutingModule } from './admin-home-routing.module';
 import { AdminHomeComponent } from './admin-home.component';
 import { PrimeModule } from '../../../prime.module';
 import { ListaUsuariosComponent } from '../lista-usuarios/lista-usuarios.component';
+import { ComponentsModule } from '../../../components/components.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ListaUsuariosComponent } from '../lista-usuarios/lista-usuarios.compone
     CommonModule,
     AdminHomeRoutingModule,
     PrimeModule,
+    ComponentsModule,
   ]
 })
 export class AdminHomeModule { }

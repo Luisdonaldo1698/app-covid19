@@ -1,0 +1,23 @@
+<div>
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <img src="https://images.vexels.com/media/users/3/212893/isolated/preview/a176f3bc5b7509d59761e0c3e8a9b43a-simbolo-de-hojas-de-flor-de-estetoscopio.png" alt="" height="40">
+        </div>
+
+        <div class="p-toolbar-group-right">
+            <div class="avatar" (click)="op.toggle($event)">
+                <p-avatar image="https://upload.wikimedia.org/wikipedia/commons/d/d3/User_Circle.png"></p-avatar>
+                <i class="pi pi-angle-down"></i>
+            </div>
+        </div>
+    </p-toolbar>
+</div>
+
+<p-overlayPanel #op>
+    <ng-template pTemplate>
+        <div class="item" (click)="logout()">
+            <i class="pi pi-power-off"></i>
+            <p>Cerrar sesión</p>
+        </div>
+    </ng-template>
+</p-overlayPanel>

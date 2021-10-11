@@ -51,7 +51,7 @@ export class AuthService {
     });
   }
 
-  SignOut() {
+  logOut() {
     return this.angularFireAuth.signOut();
   }
 
@@ -70,6 +70,10 @@ export class AuthService {
             }
             reject();
           });
+        }
+        else {
+          this.router.navigate(['/login'], {replaceUrl: true});
+          reject();
         }
       },err => {
         reject(err);

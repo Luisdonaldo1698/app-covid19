@@ -6,6 +6,8 @@ import { PacienteComponent } from './paciente.component';
 import { RegistrarSintomasComponent } from '../registrar-sintomas/registrar-sintomas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeModule } from '../../../prime.module';
+import { NavbarComponent } from '../../../components/navbar/navbar.component';
+import { ComponentsModule } from '../../../components/components.module';
 
 
 @NgModule({
@@ -19,6 +21,7 @@ import { PrimeModule } from '../../../prime.module';
     ReactiveFormsModule,
     PacienteRoutingModule,
     PrimeModule,
+    ComponentsModule,
   ]
 })
 export class PacienteModule { }
