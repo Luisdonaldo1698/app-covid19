@@ -33,7 +33,13 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+    pathMatch: 'full',
+    redirectTo: 'login'
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'login'
   }
 ];
 
