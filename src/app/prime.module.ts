@@ -9,6 +9,7 @@ import {ToolbarModule} from 'primeng/toolbar';
 import {OverlayPanelModule} from 'primeng/overlaypanel'
 import {AvatarModule} from 'primeng/avatar';
 import {CalendarModule} from 'primeng/calendar';
+import {TabViewModule} from 'primeng/tabview';
 
 const modules = [
   InputTextModule,
@@ -19,6 +20,7 @@ const modules = [
   OverlayPanelModule,
   AvatarModule,
   CalendarModule,
+  TabViewModule,
 ]
 
 @NgModule({

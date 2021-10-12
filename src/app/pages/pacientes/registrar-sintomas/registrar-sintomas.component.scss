@@ -5,7 +5,12 @@
     justify-content: center;
     flex-direction: column;
     .formulario {
-        max-width: 300px;
+        margin-top: 20px;
+        max-width: 500px;
+        background-color: white;
+        box-shadow: 5px 5px 10px rgb(73, 73, 73);
+        padding: 20px;
+        border-radius: 10px;
     }
     span {
         margin-top: 25px;

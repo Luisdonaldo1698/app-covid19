@@ -1,4 +1,12 @@
 <app-navbar></app-navbar>
 
-<app-lista-usuarios rol="paciente"></app-lista-usuarios>
-<app-lista-usuarios rol="doctor"></app-lista-usuarios>
+<p-tabView>
+    <p-tabPanel header="Doctores" leftIcon="pi pi-heart" [selected]="true">
+        <app-lista-usuarios rol="doctor"></app-lista-usuarios>
+    </p-tabPanel>
+    <p-tabPanel header="Pacientes" leftIcon="pi pi-user">
+        <ng-template pTemplate="content">
+            <app-lista-usuarios rol="paciente"></app-lista-usuarios>
+        </ng-template>
+    </p-tabPanel>
+</p-tabView>
