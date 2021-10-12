@@ -12,9 +12,7 @@ export class PacienteGuard implements CanActivate {
     private authService: AuthService,
   ){}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       console.log('guard paciente');
       return this.authService.checkAuthentication(Roles.paciente);
   }

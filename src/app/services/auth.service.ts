@@ -57,6 +57,7 @@ export class AuthService {
   }
 
   checkAuthentication(rol: Roles): Promise<boolean>{
+    console.log('checando la autenticacion')
     return new Promise((resolve, reject) => {
       this.angularFireAuth.authState.subscribe(user => {
         if(user && user.uid){

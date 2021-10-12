@@ -12,9 +12,7 @@ export class DoctorGuard implements CanActivate {
     private authService: AuthService,
   ){}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       console.log('guard doctor');
       return this.authService.checkAuthentication(Roles.doctor);
   }

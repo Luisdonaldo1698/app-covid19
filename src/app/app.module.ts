@@ -15,6 +15,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { ComponentsModule } from './components/components.module';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DoctorModule } from './pages/doctores/doctor/doctor.module';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     PacienteModule,
     ComponentsModule,
+    DoctorModule,
+    PipesModule,
   ],
   providers: [
     AngularFirestore,

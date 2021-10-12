@@ -8,6 +8,7 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ToolbarModule} from 'primeng/toolbar';
 import {OverlayPanelModule} from 'primeng/overlaypanel'
 import {AvatarModule} from 'primeng/avatar';
+import {CalendarModule} from 'primeng/calendar';
 
 const modules = [
   InputTextModule,
@@ -17,6 +18,7 @@ const modules = [
   ToolbarModule,
   OverlayPanelModule,
   AvatarModule,
+  CalendarModule,
 ]
 
 @NgModule({

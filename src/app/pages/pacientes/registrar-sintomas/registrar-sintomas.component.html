@@ -45,14 +45,9 @@
             <!-- dias transcurridos -->
             <div>
                 <span class="p-float-label">
-              <input
-              type="number"
-              autocomplete="off"
-              pInputText
-              formControlName="dias"
-              />
-              <label for="float-input">Dias transcurridos</label>
-            </span>
+                  <input type="number" autocomplete="off" pInputText formControlName="dias"/>
+                  <label for="float-input">Dias transcurridos</label>
+                </span>
 
                 <div *ngFor="let validacion of validacionMensajes.dias">
                     <div class="mensajeError" *ngIf="validarFormulario('dias', validacion.type)">
@@ -64,9 +59,9 @@
             <!-- personas -->
             <div>
                 <span class="p-float-label">
-        <input type="number" autocomplete="off" pInputText formControlName="personas"/>
-        <label for="float-input">Personas convividas</label>
-      </span>
+                  <input type="number" autocomplete="off" pInputText formControlName="personas"/>
+                  <label for="float-input">Personas convividas</label>
+                </span>
 
                 <div *ngFor="let validacion of validacionMensajes.personas">
                     <div class="mensajeError" *ngIf="validarFormulario('personas', validacion.type)">
@@ -75,11 +70,38 @@
                 </div>
             </div>
 
-            <div class="buttonSubmit">
-                <button pButton type="submit" label="Registrar" [disabled]="formulario.invalid" [loading]="loading"></button>
+            <!-- oxigenacion -->
+            <div>
+                <span class="p-float-label">
+                  <input type="number" autocomplete="off" pInputText formControlName="oxigenacion"/>
+                  <label for="float-input">Oxigenación (95 a 90 normal)</label>
+                </span>
 
+                <div *ngFor="let validacion of validacionMensajes.oxigenacion">
+                    <div class="mensajeError" *ngIf="validarFormulario('oxigenacion', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
             </div>
 
+            <!-- oxigenacion -->
+            <div>
+                <span class="p-float-label">
+                  <input type="number" autocomplete="off" pInputText formControlName="temperatura"/>
+                  <label for="float-input">Temperatura</label>
+                </span>
+
+                <div *ngFor="let validacion of validacionMensajes.temperatura">
+                    <div class="mensajeError" *ngIf="validarFormulario('temperatura', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+            <!-- boton -->
+            <div class="buttonSubmit">
+                <button pButton type="submit" label="Registrar" [disabled]="formulario.invalid" [loading]="loading"></button>
+            </div>
         </form>
     </div>
 </div>

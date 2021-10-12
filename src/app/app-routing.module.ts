@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     path: 'd',
-    loadChildren: () => import('./pages/doctores/doctores.module').then(m => m.DoctoresModule),
+    loadChildren: () => import('./pages/doctores/doctor/doctor.module').then(m => m.DoctorModule),
     canActivate: [DoctorGuard],
   },
   {
