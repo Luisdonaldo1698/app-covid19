@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestoreCollection, AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserModel } from '../models/user.model';
 import { AlertService } from './alert.service';
 import { map } from 'rxjs/operators'
@@ -13,9 +13,13 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   user: UserModel | undefined;
+  autenticado: boolean = false;
 
   // users: Observable<UserModel>;
   private userCollection: AngularFirestoreCollection<UserModel>;
+
+  // subscriptions
+  authSuscription?: Subscription;
 
   constructor(
     private angularFireAuth: AngularFireAuth,
@@ -53,18 +57,28 @@ export class AuthService {
 
   logOut() {
     this.user = undefined;
+    this.autenticado = false;
     return this.angularFireAuth.signOut();
+  }
+
+  unsubscribe(){
+    this.authSuscription?.unsubscribe();
   }
 
   checkAuthentication(rol: Roles): Promise<boolean>{
     console.log('checando la autenticacion')
     return new Promise((resolve, reject) => {
-      this.angularFireAuth.authState.subscribe(user => {
+      if(this.autenticado){
+        resolve(true);
+      }
+      this.authSuscription = this.angularFireAuth.authState.subscribe(user => {
         if(user && user.uid){
           this.getUser(user.uid).subscribe((resp: UserModel[]) => {
             if(resp.length > 0){
+              this.user = undefined;
               this.user = resp[0];
-              const condicion = this.user.rol === rol;
+              this.autenticado = true;
+              const condicion = this.user.rol === rol.toString();
               if(!condicion){
                 this.router.navigate([`/${this.user.rol.substring(0,1)}`], {replaceUrl: true});
               }
@@ -85,18 +99,19 @@ export class AuthService {
 
   loginGuard(): Promise<boolean>{
     return new Promise((resolve, reject) => {
+      if(!this.autenticado){
+        resolve(true);
+      }
       this.angularFireAuth.authState.subscribe(user => {
         if(!user){
+          this.autenticado = false;
           resolve(true);
         }
         else {
-          this.getUser(user.uid).subscribe((resp: UserModel[]) => {
-            if(resp.length > 0){
-              this.router.navigate([`/${resp[0].rol.substring(0,1)}`], {replaceUrl: true});
-              resolve(false);
-            }
-            resolve(true);
-          });
+          this.autenticado = true;
+          this.router.navigate([`/p`], {replaceUrl: true});
+          resolve(false);
+
         }
       },err => {
         reject(err);

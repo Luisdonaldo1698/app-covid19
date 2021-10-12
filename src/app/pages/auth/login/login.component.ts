@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { UserModel } from '../../../models/user.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,8 @@ export class LoginComponent implements OnInit {
     ]
   };
 
+  getUserSuscription?: Subscription;
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -32,6 +35,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.getUserSuscription?.unsubscribe();
   }
 
   initForm() {
@@ -53,10 +62,11 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.authService.login(this.formulario.get('email')?.value, this.formulario.get('password')?.value).then(resp => {
-      this.authService.getUser(resp.user?.uid!).subscribe((user: UserModel[]) => {
+      this.getUserSuscription = this.authService.getUser(resp.user?.uid!).subscribe((user: UserModel[]) => {
         console.log(user);
         if(user.length){
           const usera = user[0];
+          this.authService.autenticado = true;
           this.router.navigate([`/${usera.rol.substring(0,1)}`], {replaceUrl: true});
         }
       });
