@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { AuthService } from '../../services/auth.service';
 
@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavbarComponent implements OnInit {
 
+  @Input() title: string = '';
 
   constructor(
     private authService: AuthService,
