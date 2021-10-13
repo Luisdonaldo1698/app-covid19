@@ -29,17 +29,6 @@ export class RegistrarSintomasComponent implements OnInit {
 
   gravidezOptions: {name: string}[];
   selectedGravidez: string = '';
-  sintomas: SintomasModel = {
-    dolorCabeza: false,
-    diarrea: false,
-    faltaDeGusto: false,
-    faltaDeOlfato: false,
-    vomito: false,
-    tos: false,
-    cansancio: false,
-    dificultadRespiratoria: false,
-    neumonia: false,
-  };
 
   validacionMensajes = {
     'descripcion': [

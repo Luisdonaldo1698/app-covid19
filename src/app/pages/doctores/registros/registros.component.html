@@ -23,7 +23,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-registro>
-            <tr class="data">
+            <tr class="data" (click)="showDialog(registro)">
                 <td>{{registro.paciente.nombre}}</td>
                 <td>{{registro.paciente.email}}</td>
                 <td>{{registro.fecha | momentDate}}</td>
@@ -32,3 +32,126 @@
         </ng-template>
     </p-table>
 </div>
+
+
+<p-dialog header="Detalle del registro" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" [modal]="true">
+    <div class="customModal">
+        <!-- datos del paciente -->
+        <div class="paciente">
+            <h4>Datos del paciente</h4>
+            <div class="w50">
+                <div class="element">
+                    <span class="p-float-label">
+                <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.paciente.nombre"/>
+                <label for="float-input">Nombre</label>
+              </span>
+                </div>
+                <div class="element">
+                    <span class="p-float-label">
+                <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.paciente.email"/>
+                <label for="float-input">Correo electrónico</label>
+              </span>
+                </div>
+            </div>
+        </div>
+        <!-- datos -->
+        <div>
+            <div class="title-datos-generales">
+                <h4>Datos generales</h4>
+            </div>
+            <div class="w50">
+                <div class="element">
+                    <span class="p-float-label">
+                <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.oxigenacion"/>
+                <label for="float-input">Oxigenación</label>
+              </span>
+                </div>
+                <div class="element">
+                    <span class="p-float-label">
+              <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.gravidez"/>
+              <label for="float-input">Gravidez</label>
+            </span>
+                </div>
+            </div>
+            <div class="w50">
+                <div class="element">
+                    <span class="p-float-label">
+                <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.diasTranscurridos"/>
+                <label for="float-input">Dias transcurridos</label>
+              </span>
+                </div>
+                <div class="element">
+                    <span class="p-float-label">
+                <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.personasConvividas"/>
+                <label for="float-input">Personas convividas</label>
+              </span>
+                </div>
+            </div>
+            <div class="descripcion">
+                <span class="p-float-label">
+                  <input type="text" autocomplete="off" pInputText disabled="true" [(ngModel)]="registroPaciente.descripcion"/>
+                  <label for="float-input">Descripcion</label>
+                </span>
+            </div>
+        </div>
+        <!-- sintomas -->
+        <div class="sintomas">
+            <h4>Sintomas</h4>
+            <div class="item-w50">
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.dolorCabeza"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.dolorCabeza"></i>
+                    <p>Dolor de cabeza</p>
+                </div>
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.faltaDeGusto"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.faltaDeGusto"></i>
+                    <p>Falta de gusto</p>
+                </div>
+            </div>
+            <div class="item-w50">
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.faltaDeOlfato"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.faltaDeOlfato"></i>
+                    <p>Falta de olfato</p>
+                </div>
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.dificultadRespiratoria"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.dificultadRespiratoria"></i>
+                    <p>Dificultad respiratoria</p>
+                </div>
+            </div>
+            <div class="item-w50">
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.neumonia"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.neumonia"></i>
+                    <p>Neumonia</p>
+                </div>
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.vomito"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.vomito"></i>
+                    <p>Vomito</p>
+                </div>
+            </div>
+            <div class="item-w50">
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.tos"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.tos"></i>
+                    <p>Tos</p>
+                </div>
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.cansancio"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.cansancio"></i>
+                    <p>Cansancio</p>
+                </div>
+            </div>
+            <div class="item-w50">
+                <div class="item">
+                    <i class="pi pi-times-circle" *ngIf="!registroPaciente.sintomas.diarrea"></i>
+                    <i class="pi pi-check-square" *ngIf="registroPaciente.sintomas.diarrea"></i>
+                    <p>Diarrea</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

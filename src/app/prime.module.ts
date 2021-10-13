@@ -12,6 +12,7 @@ import {CalendarModule} from 'primeng/calendar';
 import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import {CheckboxModule} from 'primeng/checkbox';
+import {DialogModule} from 'primeng/dialog';
 
 const modules = [
   InputTextModule,
@@ -25,6 +26,7 @@ const modules = [
   TabViewModule,
   DropdownModule,
   CheckboxModule,
+  DialogModule,
 ]
 
 @NgModule({

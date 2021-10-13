@@ -26,3 +26,46 @@
         }
     }
 }
+
+.customModal {
+    .w50 {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .element {
+        margin-top: 25px;
+        width: 48%;
+    }
+    .title-datos-generales {
+        margin-top: 15px;
+    }
+    .descripcion {
+        margin-top: 25px;
+    }
+    input {
+        width: 100%;
+    }
+    .sintomas {
+        padding-top: 15px;
+        .item-w50 {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .pi {
+            margin-right: 10px;
+        }
+        .pi-check-square {
+            color: red;
+        }
+        .item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 50%;
+        }
+    }
+}

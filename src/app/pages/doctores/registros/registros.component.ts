@@ -13,6 +13,33 @@ export class RegistrosComponent implements OnInit {
   registros: RegistrarSintomasModel[] = [];
   loading: boolean = false;
   fecha: Date = new Date;
+  display: boolean = false;
+  registroPaciente: RegistrarSintomasModel = {
+    descripcion: '',
+    gravidez: '',
+    diasTranscurridos: 0,
+    personasConvividas: 0,
+    oxigenacion: '',
+    temperatura: '',
+    fecha: '',
+    hora: '',
+    paciente: {
+      nombre: '',
+      email: '',
+      rol: '',
+    },
+    sintomas: {
+      dolorCabeza: false,
+      diarrea: false,
+      faltaDeGusto: false,
+      faltaDeOlfato: false,
+      vomito: false,
+      tos: false,
+      cansancio: false,
+      dificultadRespiratoria: false,
+      neumonia: false,
+    },
+  };
 
   constructor(
     private doctorService: DoctorService,
@@ -20,6 +47,12 @@ export class RegistrosComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarRegistros();
+  }
+
+  showDialog(registro: RegistrarSintomasModel) {
+    this.registroPaciente = registro;
+    this.display = true;
+    console.log(registro);
   }
 
   cargarRegistros(fecha?: string){
