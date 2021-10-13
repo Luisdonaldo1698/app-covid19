@@ -10,6 +10,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel'
 import {AvatarModule} from 'primeng/avatar';
 import {CalendarModule} from 'primeng/calendar';
 import {TabViewModule} from 'primeng/tabview';
+import {DropdownModule} from 'primeng/dropdown';
+import {CheckboxModule} from 'primeng/checkbox';
 
 const modules = [
   InputTextModule,
@@ -21,6 +23,8 @@ const modules = [
   AvatarModule,
   CalendarModule,
   TabViewModule,
+  DropdownModule,
+  CheckboxModule,
 ]
 
 @NgModule({

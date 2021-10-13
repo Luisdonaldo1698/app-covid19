@@ -23,17 +23,22 @@
             </div>
 
             <!-- gravidez -->
-            <div>
+            <!-- <div>
                 <span class="p-float-label">
-        <input
-        type="text"
-          autocomplete="off"
-          pInputText
-          formControlName="gravidez"
-        />
-        <label for="float-input">Gravidez</label>
-      </span>
+                  <input type="text" autocomplete="off" pInputText formControlName="gravidez"/>
+                  <label for="float-input">Gravidez</label>
+                </span>
 
+                <div *ngFor="let validacion of validacionMensajes.gravidez">
+                    <div class="mensajeError" *ngIf="validarFormulario('gravidez', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div> -->
+
+
+            <div class="gravidez">
+                <p-dropdown [options]="gravidezOptions" formControlName="gravidez" optionLabel="name" placeholder="Seleccionar gravidez"></p-dropdown>
                 <div *ngFor="let validacion of validacionMensajes.gravidez">
                     <div class="mensajeError" *ngIf="validarFormulario('gravidez', validacion.type)">
                         {{ validacion.message }} *
@@ -98,10 +103,50 @@
                 </div>
             </div>
 
+            <!-- sintomas -->
+            <div class="select-sintomas">
+                <h4>Seleccionar sintomas</h4>
+            </div>
+            <div class="sintomas">
+                <div class="w100">
+                    <p-checkbox [formControl]="dolorCabeza" [binary]="true" label="Dolor de cabeza"></p-checkbox>
+                </div>
+                <div class="w100">
+                    <p-checkbox [formControl]="faltaDeGusto" [binary]="true" label="Falta de gusto"></p-checkbox>
+                </div>
+                <div class="w100">
+                    <p-checkbox [formControl]="faltaDeOlfato" [binary]="true" label="Falta de olfato"></p-checkbox>
+                </div>
+                <div class="w100">
+                    <p-checkbox [formControl]="dificultadRespiratoria" [binary]="true" label="Dificultad respiratoria"></p-checkbox>
+                </div>
+                <div class="w100">
+                    <p-checkbox [formControl]="neumonia" [binary]="true" label="Neumonia"></p-checkbox>
+                </div>
+                <div class="w100">
+                    <div class="w50">
+                        <p-checkbox [formControl]="vomito" [binary]="true" label="Vomito"></p-checkbox>
+                    </div>
+                    <div class="w50">
+                        <p-checkbox [formControl]="tos" [binary]="true" label="Tos"></p-checkbox>
+                    </div>
+                </div>
+                <div class="w100">
+                    <div class="w50">
+                        <p-checkbox [formControl]="cansancio" [binary]="true" label="Cansancio"></p-checkbox>
+                    </div>
+                    <div class="w50">
+                        <p-checkbox [formControl]="diarrea" [binary]="true" label="Diarrea"></p-checkbox>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- boton -->
             <div class="buttonSubmit">
                 <button pButton type="submit" label="Registrar" [disabled]="formulario.invalid" [loading]="loading"></button>
             </div>
         </form>
+
     </div>
 </div>

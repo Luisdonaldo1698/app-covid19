@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from 'src/app/services/alert.service';
-import { RegistrarSintomasModel } from '../../../models/registrar-sintomas.model';
+import { RegistrarSintomasModel, SintomasModel } from '../../../models/registrar-sintomas.model';
 import { PacienteService } from '../../../services/paciente.service';
 import { AuthService } from '../../../services/auth.service';
 import * as moment from 'moment';
@@ -16,6 +16,30 @@ export class RegistrarSintomasComponent implements OnInit {
   loading: boolean = false;
 
   formulario!: FormGroup;
+  formularioSintomas: FormGroup = new FormGroup({});
+  dolorCabeza: FormControl = new FormControl(false, []);
+  diarrea: FormControl = new FormControl(false, []);
+  faltaDeGusto: FormControl = new FormControl(false, []);
+  faltaDeOlfato: FormControl = new FormControl(false, []);
+  vomito: FormControl = new FormControl(false, []);
+  tos: FormControl = new FormControl(false, []);
+  cansancio: FormControl = new FormControl(false, []);
+  dificultadRespiratoria: FormControl = new FormControl(false, []);
+  neumonia: FormControl = new FormControl(false, []);
+
+  gravidezOptions: {name: string}[];
+  selectedGravidez: string = '';
+  sintomas: SintomasModel = {
+    dolorCabeza: false,
+    diarrea: false,
+    faltaDeGusto: false,
+    faltaDeOlfato: false,
+    vomito: false,
+    tos: false,
+    cansancio: false,
+    dificultadRespiratoria: false,
+    neumonia: false,
+  };
 
   validacionMensajes = {
     'descripcion': [
@@ -52,7 +76,13 @@ export class RegistrarSintomasComponent implements OnInit {
     private alertService: AlertService,
     private pacienteService: PacienteService,
     private authService: AuthService,
-  ) {}
+  ) {
+    this.gravidezOptions = [
+      {name: 'Baja'},
+      {name: 'Media'},
+      {name: 'Alta'},
+    ];
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -66,21 +96,28 @@ export class RegistrarSintomasComponent implements OnInit {
       ])),
       dias: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
       ])),
       personas: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
       ])),
       oxigenacion: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
       ])),
       temperatura: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+$')
       ])),
+      sintomas: this.formularioSintomas,
     });
+
+    this.formularioSintomas.addControl('dolorCabeza', this.dolorCabeza);
+    this.formularioSintomas.addControl('diarrea', this.diarrea);
+    this.formularioSintomas.addControl('faltaDeGusto', this.faltaDeGusto);
+    this.formularioSintomas.addControl('faltaDeOlfato', this.faltaDeOlfato);
+    this.formularioSintomas.addControl('vomito', this.vomito);
+    this.formularioSintomas.addControl('tos', this.tos);
+    this.formularioSintomas.addControl('cansancio', this.cansancio);
+    this.formularioSintomas.addControl('dificultadRespiratoria', this.dificultadRespiratoria);
+    this.formularioSintomas.addControl('neumonia', this.neumonia);
   }
 
   validarFormulario(campo: string, tipo: any): boolean{
@@ -93,7 +130,7 @@ export class RegistrarSintomasComponent implements OnInit {
     const momenthour = moment().format('HH:mm:ss');
     const sintomas: RegistrarSintomasModel = {
       descripcion: this.formulario.get('descripcion')?.value,
-      gravidez: this.formulario.get('gravidez')?.value,
+      gravidez: this.formulario.get('gravidez')?.value.name,
       diasTranscurridos: this.formulario.get('dias')?.value,
       personasConvividas: this.formulario.get('personas')?.value,
       oxigenacion: this.formulario.get('oxigenacion')?.value,
@@ -101,6 +138,7 @@ export class RegistrarSintomasComponent implements OnInit {
       fecha: momentDate,
       hora: momenthour,
       paciente: this.authService.user!,
+      sintomas: this.formulario.get('sintomas')?.value,
     }
     console.log(sintomas);
     this.pacienteService.registrarSintomas(sintomas).then(resp => {
