@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RegistrarSintomasModel } from '../../../models/registrar-sintomas.model';
 import { DoctorService } from '../../../services/doctor.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registros',
@@ -14,7 +15,9 @@ export class RegistrosComponent implements OnInit {
   loading: boolean = false;
   fecha: Date = new Date;
   display: boolean = false;
+
   registroPaciente: RegistrarSintomasModel = {
+    id: '',
     descripcion: '',
     gravidez: '',
     diasTranscurridos: 0,
@@ -43,6 +46,7 @@ export class RegistrosComponent implements OnInit {
 
   constructor(
     private doctorService: DoctorService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -75,4 +79,8 @@ export class RegistrosComponent implements OnInit {
     this.cargarRegistros(formatoFecha);
   }
 
+  goToGenerarReceta(){
+    this.doctorService.saveRegistro(this.registroPaciente);
+    this.router.navigate(['d/crear-receta']);
+  }
 }

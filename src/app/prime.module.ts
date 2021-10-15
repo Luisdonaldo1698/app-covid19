@@ -13,6 +13,7 @@ import {TabViewModule} from 'primeng/tabview';
 import {DropdownModule} from 'primeng/dropdown';
 import {CheckboxModule} from 'primeng/checkbox';
 import {DialogModule} from 'primeng/dialog';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 const modules = [
   InputTextModule,
@@ -27,6 +28,7 @@ const modules = [
   DropdownModule,
   CheckboxModule,
   DialogModule,
+  InputTextareaModule,
 ]
 
 @NgModule({

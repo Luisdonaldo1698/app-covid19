@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { RegistrarSintomasModel } from '../models/registrar-sintomas.model';
 import { map } from 'rxjs/operators';
+import { RecetaModel } from '../models/receta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,25 @@ import { map } from 'rxjs/operators';
 export class DoctorService {
 
   private registrosCollection: AngularFirestoreCollection<RegistrarSintomasModel>;
+  private recetaCollection: AngularFirestoreCollection<RecetaModel>;
 
   constructor(
     private afs: AngularFirestore,
   ) {
     this.registrosCollection = afs.collection<RegistrarSintomasModel>('registros');
+    this.recetaCollection = afs.collection<RecetaModel>('recetas');
+  }
+
+  saveRegistro(registro: RegistrarSintomasModel){
+    localStorage.setItem('registro', JSON.stringify(registro));
+  }
+
+  getRegistro(): RegistrarSintomasModel{
+    return JSON.parse(localStorage.getItem('registro')?? '') as RegistrarSintomasModel;
+  }
+
+  clearRegistro(){
+    localStorage.removeItem('registro');
   }
 
   listarRegistros(fecha: string){
@@ -27,5 +42,9 @@ export class DoctorService {
         })
       )
     );
+  }
+
+  generarReceta(receta: RecetaModel){
+    return this.recetaCollection.add(receta);
   }
 }

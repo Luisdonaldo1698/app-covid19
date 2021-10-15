@@ -39,7 +39,7 @@ export class AuthService {
       console.log(resp);
       if(resp && resp.user && resp.user.uid){
         const userId = resp.user?.uid;
-        user.id = userId;
+        user.userId = userId;
         delete user.password;
         this.userCollection.add(user).then(r => {
           console.log(r);

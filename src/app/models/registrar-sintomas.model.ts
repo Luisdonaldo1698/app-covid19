@@ -1,5 +1,6 @@
 import { UserModel } from './user.model';
 export interface RegistrarSintomasModel{
+  id?: string;
   descripcion: string;
   gravidez: string;
   diasTranscurridos: number;

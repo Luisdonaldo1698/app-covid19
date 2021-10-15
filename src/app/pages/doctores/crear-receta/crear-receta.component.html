@@ -1,0 +1,67 @@
+<div class="container">
+    <h1>Registrar sintomas</h1>
+    <div class="receta">
+        <div class="recomendacionesG">
+            <span class="p-float-label">
+              <textarea pInputTextarea [autoResize]="true" [(ngModel)]="recomendacionesGenerales"></textarea>
+            <label for="float-input">Recomendaciones generales</label>
+          </span>
+        </div>
+        <div class="medicamentos">
+            <h3 *ngIf="medicamentos.length > 0">Medicamentos</h3>
+            <div *ngFor="let medicamento of medicamentos; let i = index">
+                <p><b>{{i + 1}}- {{medicamento.nombre}}</b></p>
+                <p>{{medicamento.recomendacion}}</p>
+                <hr>
+            </div>
+        </div>
+        <button icon="pi pi-plus" iconPos="left" pButton type="button" class="p-button-outlined p-button-rounded" label="Agregar medicamento" (click)="showDialog()"></button>
+    </div>
+    <div class="saveReceta">
+        <button icon="pi pi-save" iconPos="left" pButton type="button" class="p-button-raised p-button-rounded" label="Generar receta" (click)="generarReceta()"></button>
+    </div>
+</div>
+
+<p-dialog header="Agregar medicamento" [(visible)]="display" [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [style]="{width: '50vw'}" [modal]="true" (onHide)="clearForm()">
+    <div class="formulario">
+
+        <form [formGroup]="formulario" (ngSubmit)="agregarMedicamento()">
+            <!-- nombre -->
+            <div>
+                <span class="p-float-label">
+              <input type="text" autocomplete="off" pInputText formControlName="nombre"/>
+              <label for="float-input">nombre</label>
+          </span>
+
+                <div *ngFor="let validacion of validacionMensajes.nombre">
+                    <div class="mensajeError" *ngIf="validarFormulario('nombre', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- recomendacion -->
+            <div>
+                <span class="p-float-label">
+              <input type="text" autocomplete="off" pInputText formControlName="recomendacion"/>
+              <label for="float-input">Recomendacion del medicamento</label>
+            </span>
+
+                <div *ngFor="let validacion of validacionMensajes.recomendacion">
+                    <div class="mensajeError" *ngIf="validarFormulario('recomendacion', validacion.type)">
+                        {{ validacion.message }} *
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- boton -->
+            <div class="buttonSubmit">
+                <button pButton type="submit" label="Agregar" [disabled]="formulario.invalid" [loading]="loading"></button>
+            </div>
+        </form>
+
+    </div>
+
+</p-dialog>
