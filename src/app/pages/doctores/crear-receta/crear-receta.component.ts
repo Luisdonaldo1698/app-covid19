@@ -73,7 +73,6 @@ export class CrearRecetaComponent implements OnInit {
       doctor: this.authService.user!,
       paciente: registro.paciente,
       medicamentos: this.medicamentos,
-      registroId: registro.id,
     }
     console.log(receta);
     this.doctorService.generarReceta(receta).then(resp => {
@@ -81,7 +80,7 @@ export class CrearRecetaComponent implements OnInit {
       this.doctorService.clearRegistro();
       this.alertService.showToast('Receta creada exitosamente', 'success');
       this.loading = false;
-      this.router.navigate(['..']);
+      this.router.navigate(['/d']);
     }).catch(err => {+
       console.log(err);
       this.alertService.showAlert('Error', err, 'error');

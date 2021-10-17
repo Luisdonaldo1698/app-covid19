@@ -7,7 +7,6 @@ import { RegistrarSintomasComponent } from '../registrar-sintomas/registrar-sint
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeModule } from '../../../prime.module';
 import { ComponentsModule } from '../../../components/components.module';
-import { PacienteRegistrosComponent } from '../paciente-registros/paciente-registros.component';
 import { PipesModule } from '../../../pipes/pipes.module';
 
 
@@ -15,7 +14,6 @@ import { PipesModule } from '../../../pipes/pipes.module';
   declarations: [
     PacienteComponent,
     RegistrarSintomasComponent,
-    PacienteRegistrosComponent,
   ],
   imports: [
     CommonModule,
