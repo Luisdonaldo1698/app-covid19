@@ -11,6 +11,7 @@ export interface RegistrarSintomasModel{
   hora: string;
   paciente: UserModel;
   sintomas: SintomasModel;
+  recetaUrl?: string;
 }
 
 export interface SintomasModel {

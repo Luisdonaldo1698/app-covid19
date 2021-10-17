@@ -34,24 +34,23 @@ export class AuthService {
     return this.angularFireAuth.signInWithEmailAndPassword(email, password);
   }
 
-  async signUp(user: UserModel){
-    this.angularFireAuth.createUserWithEmailAndPassword(user.email, user.password!).then(resp => {
-      console.log(resp);
-      if(resp && resp.user && resp.user.uid){
+  async signUp(user: UserModel): Promise<void>{
+    return new Promise(async (resolve, reject) => {
+      try {
+        const resp = await this.angularFireAuth.createUserWithEmailAndPassword(user.email, user.password!)
+        if(!resp){
+          reject()
+        }
         const userId = resp.user?.uid;
         user.userId = userId;
         delete user.password;
-        this.userCollection.add(user).then(r => {
-          console.log(r);
-        }).catch(err => {
-          this.alertService.showAlert('Error', err, 'error');
-        });
-        return true;
+        await this.userCollection.add(user)
+        resolve();
+      } catch (err: any) {
+        console.log(err);
+        this.alertService.showAlert('Error', err, 'error');
+        reject()
       }
-      return false;
-    }).catch(err => {
-      console.log(err);
-      this.alertService.showAlert('Error', err, 'error');
     });
   }
 
@@ -70,57 +69,62 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       if(this.autenticado){
         resolve(true);
-      }
-      this.authSuscription = this.angularFireAuth.authState.subscribe(user => {
-        if(user && user.uid){
-          this.getUser(user.uid).subscribe((resp: UserModel[]) => {
-            if(resp.length > 0){
-              this.user = undefined;
-              this.user = resp[0];
-              this.autenticado = true;
-              const condicion = this.user.rol === rol.toString();
-              if(!condicion){
-                this.router.navigate([`/${this.user.rol.substring(0,1)}`], {replaceUrl: true});
+      }else {
+        this.authSuscription = this.angularFireAuth.authState.subscribe(user => {
+          if(user && user.uid){
+            this.getUser(user.uid).subscribe((resp: UserModel[]) => {
+              if(resp.length > 0){
+                this.user = undefined;
+                this.user = resp[0];
+                this.autenticado = true;
+                const condicion = this.user.rol === rol.toString();
+                if(!condicion){
+                  this.router.navigate([`/${this.user.rol.substring(0,1)}`], {replaceUrl: true});
+                }
+                resolve(condicion);
               }
-              resolve(condicion);
-            }
+              reject();
+            });
+          }
+          else {
+            this.router.navigate(['/login'], {replaceUrl: true});
             reject();
-          });
-        }
-        else {
-          this.router.navigate(['/login'], {replaceUrl: true});
-          reject();
-        }
-      },err => {
-        reject(err);
-      });
+          }
+        },err => {
+          reject(err);
+        });
+      }
     });
   }
 
   loginGuard(): Promise<boolean>{
     return new Promise((resolve, reject) => {
       if(!this.autenticado){
+        console.log('desautenticado')
         resolve(true);
       }
-      this.angularFireAuth.authState.subscribe(user => {
-        if(!user){
-          this.autenticado = false;
-          resolve(true);
-        }
-        else {
-          this.autenticado = true;
-          this.router.navigate([`/p`], {replaceUrl: true});
-          resolve(false);
+      else {
+        this.angularFireAuth.authState.subscribe(user => {
+          console.log('autenticado')
+          if(!user){
+            this.autenticado = false;
+            resolve(true);
+          }
+          else {
+            this.autenticado = true;
+            this.router.navigate([`/p`], {replaceUrl: true});
+            resolve(false);
 
-        }
-      },err => {
-        reject(err);
-      });
+          }
+        },err => {
+          reject(err);
+        });
+      }
     });
   }
 
   getUser(uid: string){
-    this.userCollection = this.afs.collection<UserModel>('users', ref => ref.where('id', '==', uid));
+    this.userCollection = this.afs.collection<UserModel>('users', ref => ref.where('userId', '==', uid));
     return this.userCollection.snapshotChanges().pipe(
       map(actions =>
         actions.map(a => {

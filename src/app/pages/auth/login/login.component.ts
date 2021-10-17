@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.authService.login(this.formulario.get('email')?.value, this.formulario.get('password')?.value).then(resp => {
+      console.log(resp)
       this.getUserSuscription = this.authService.getUser(resp.user?.uid!).subscribe((user: UserModel[]) => {
         console.log(user);
         if(user.length){

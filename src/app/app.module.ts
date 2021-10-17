@@ -9,6 +9,8 @@ import { PrimeModule } from './prime.module';
 
 import { AngularFireModule} from '@angular/fire/compat'
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+
 import { environment } from 'src/environments/environment';
 import { PacienteModule } from './pages/pacientes/paciente/paciente.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -21,8 +23,6 @@ import { PipesModule } from './pipes/pipes.module';
 @NgModule({
   declarations: [
     AppComponent,
-    /* LoginComponent,
-    RegisterComponent */
   ],
   imports: [
     FormsModule,
@@ -36,9 +36,14 @@ import { PipesModule } from './pipes/pipes.module';
     ComponentsModule,
     DoctorModule,
     PipesModule,
+    AngularFireStorageModule,
   ],
   providers: [
     AngularFirestore,
+    /* {
+      // provide: StorageBucket,
+      useValue: 'gs://sistema-unipalido.appspot.com'
+    } */
   ],
   exports: [
     NavbarComponent,

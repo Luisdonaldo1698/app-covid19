@@ -6,6 +6,6 @@ export interface RecetaModel {
   hora: string;
   paciente: UserModel;
   doctor: UserModel;
-  registroId?: string;
   medicamentos?: MedicamentoModel[];
+  url?: string;
 }

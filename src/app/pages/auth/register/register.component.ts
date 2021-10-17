@@ -76,7 +76,7 @@ export class RegisterComponent implements OnInit {
     return this.formulario.get(campo)!.hasError(tipo) && (this.formulario.get(campo)!.dirty || this.formulario.get(campo)!.touched)
   }
 
-  register(){
+  async register(){
     this.loading = true;
     const user: UserModel = {
       nombre: this.formulario.get('nombre')?.value,
@@ -84,13 +84,15 @@ export class RegisterComponent implements OnInit {
       password: this.formulario.get('password')?.value,
       rol: this.rol,
     }
-    this.authService.signUp(user).then(() => {
-      this.loading = false;
+    console.log(user);
+    try {
+      await this.authService.signUp(user)
       this.formulario.reset();
-      this.router.navigate([this.rol === 'doctor' ? '/d' : '/p'], {replaceUrl: true});
-    }).catch(err => {
       this.loading = false;
+      this.router.navigate([this.rol === 'doctor' ? '/d' : '/p']);
+    } catch (err) {
       console.log(err);
-    });
+      this.loading = false;
+    }
   }
 }

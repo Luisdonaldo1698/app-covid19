@@ -5,6 +5,7 @@ import { RegistrarSintomasModel, SintomasModel } from '../../../models/registrar
 import { PacienteService } from '../../../services/paciente.service';
 import { AuthService } from '../../../services/auth.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-sintomas',
@@ -28,7 +29,6 @@ export class RegistrarSintomasComponent implements OnInit {
   neumonia: FormControl = new FormControl(false, []);
 
   gravidezOptions: {name: string}[];
-  selectedGravidez: string = '';
 
   validacionMensajes = {
     'descripcion': [
@@ -65,6 +65,7 @@ export class RegistrarSintomasComponent implements OnInit {
     private alertService: AlertService,
     private pacienteService: PacienteService,
     private authService: AuthService,
+    private router: Router,
   ) {
     this.gravidezOptions = [
       {name: 'Baja'},
@@ -113,7 +114,7 @@ export class RegistrarSintomasComponent implements OnInit {
     return this.formulario.get(campo)!.hasError(tipo) && (this.formulario.get(campo)!.dirty || this.formulario.get(campo)!.touched)
   }
 
-  registrarSintomas(){
+  async registrarSintomas(){
     this.loading = true;
     const momentDate = moment().format('YYYY-MM-DD');
     const momenthour = moment().format('HH:mm:ss');
@@ -130,14 +131,16 @@ export class RegistrarSintomasComponent implements OnInit {
       sintomas: this.formulario.get('sintomas')?.value,
     }
     console.log(sintomas);
-    this.pacienteService.registrarSintomas(sintomas).then(resp => {
-      console.log(resp);
+    try {
+      const resp = await this.pacienteService.registrarSintomas(sintomas)
+      console.log(resp)
       this.alertService.showToast('Sintomas registrados', 'success');
-      this.loading = false;
       this.formulario.reset();
-    }).catch(err => {
+      this.loading = false;
+      this.router.navigate(['/p']);
+    } catch (err) {
       this.loading = false;
       console.log(err);
-    });
+    }
   }
 }
