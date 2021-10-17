@@ -7,5 +7,4 @@ export interface RecetaModel {
   paciente: UserModel;
   doctor: UserModel;
   medicamentos?: MedicamentoModel[];
-  url?: string;
 }

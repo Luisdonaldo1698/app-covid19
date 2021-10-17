@@ -69,3 +69,19 @@
         }
     }
 }
+
+.conReceta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    .registro {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        p {
+            margin-right: 15px;
+        }
+    }
+}

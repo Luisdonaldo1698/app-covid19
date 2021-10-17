@@ -3,6 +3,7 @@ import { RegistrarSintomasModel } from '../../../models/registrar-sintomas.model
 import { DoctorService } from '../../../services/doctor.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registros',
@@ -15,6 +16,8 @@ export class RegistrosComponent implements OnInit {
   loading: boolean = false;
   fecha: Date = new Date;
   display: boolean = false;
+
+  registroSubscription?: Subscription;
 
   registroPaciente: RegistrarSintomasModel = {
     id: '',
@@ -53,6 +56,11 @@ export class RegistrosComponent implements OnInit {
     this.cargarRegistros();
   }
 
+  ngOnDestroy(): void {
+    console.log('ng on destroy');
+    this.registroSubscription?.unsubscribe();
+  }
+
   showDialog(registro: RegistrarSintomasModel) {
     this.registroPaciente = registro;
     this.display = true;
@@ -64,7 +72,7 @@ export class RegistrosComponent implements OnInit {
       fecha = moment().format('YYYY-MM-DD');
     }
     this.loading = true;
-    this.doctorService.listarRegistros(fecha).subscribe(resp => {
+    this.registroSubscription = this.doctorService.listarRegistros(fecha).subscribe(resp => {
       console.log(resp);
       this.registros = resp;
       this.loading = false;
@@ -82,5 +90,10 @@ export class RegistrosComponent implements OnInit {
   goToGenerarReceta(){
     this.doctorService.saveRegistro(this.registroPaciente);
     this.router.navigate(['d/crear-receta']);
+  }
+
+  verReceta(recetaUrl: string){
+    console.log(recetaUrl);
+    window.open(recetaUrl, "_blank");
   }
 }

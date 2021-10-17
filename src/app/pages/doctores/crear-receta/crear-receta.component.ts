@@ -105,4 +105,5 @@ export class CrearRecetaComponent implements OnInit {
   clearForm(){
     this.formulario.reset();
   }
+
 }
