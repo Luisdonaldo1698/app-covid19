@@ -1,10 +1,10 @@
-# Clinico
+# App Covid
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
 
-## Development server
+## Servidor de desarrollo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+ejecutar `ng serve -o` para generar el servidor de desarrollo. navegar a `http://localhost:4200/`. La app automaticamente recargara los cambios al modificar un archivo.
 
 ## Code scaffolding
 
